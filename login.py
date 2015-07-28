@@ -1,3 +1,4 @@
+import os, sys, glob, math, random, gfx, config, functions, time
 
-username = ["test, user"]
-password = [0, 1]
+username = ("user") #change to anything you want
+password = ("0") #change to anything you want
