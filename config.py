@@ -25,3 +25,4 @@ description_cal = ("[CALCULATOR] - The calcuator is buit directly in so you do n
 description_end = ("[END] - This command can be used to end the program when it prompts you for the next request.") #edit this to change the message shown when user asks for description of the end command
 description_define = ("[DEFINE] - This command requires a second word after it so it can search the definition up and dis play it.")
 description_time = ("[TIME] - This command displays time in this format: 12:00AM PST on July 29, 2015 ")
+description_weather = ("[WEATHER] - This command requires a second word (a city name with no spaces if its is a multi-word city name) after it. It will show the temperature of the city. More outputs will be added.")
