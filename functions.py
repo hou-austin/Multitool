@@ -17,12 +17,12 @@ def username_login():
         try:
             inusername = str(inusername)
             if (inusername == login.username):
-                print ("-".join(gfx.load_sequence) + " |valid username!")
+                print ("-".join(gfx.load_sequence) + " | valid username!")
                 return True
             elif (inusername != login.username):
-                print ("-".join(gfx.load_sequence) + " |invalid username!")
+                print ("-".join(gfx.load_sequence) + " | invalid username!")
         except TypeError:
-            print ("-".join(gfx.load_sequence) + " |invalid username!")
+            print ("-".join(gfx.load_sequence) + " | invalid username!")
 
 def password_login():
     while True:
@@ -30,12 +30,12 @@ def password_login():
         try:
             inpassword = str(inpassword)
             if (inpassword == login.password):
-                print ("-".join(gfx.load_sequence) + " |valid password!")
+                print ("-".join(gfx.load_sequence) + " | valid password!")
                 return True
             elif (inpassword != login.password):
-                print ("-".join(gfx.load_sequence) + " |invalid password!")
+                print ("-".join(gfx.load_sequence) + " | invalid password!")
         except TypeError:
-            print ("-".join(gfx.load_sequence) + " |invalid password!")
+            print ("-".join(gfx.load_sequence) + " | invalid password!")
 
 def choice_selecter():
     user_input = str(input(" >>> "))
