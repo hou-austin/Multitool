@@ -1,17 +1,17 @@
 import os, sys, glob, math, random, login, gfx, functions, time
 
-version_number = ("1.3.6") #version number of the program
+version_number = ("Alpha 1.3.6") #version number of the program
 """
 version history -----
-1.0.0: the program basics are written and files are created
-1.1.0: login and help is implemented
-1.2.0 pre-release: a buggy version with a calculator and other bug fixes for previous releases
-1.2.1: the calculator is fixed and one more function is added. Other bugs have been fixed as well
-1.2.3: the calculator is fixed further and one more function is added. Other bugs have been fixed as well
-1.3.0 pre-release: a dictionary is being implemented
-1.3.0: a dictionary/define function is implemented with a few graphical glitches only when long definitions are displayed.
-1.3.6 pre-release: implementing time and weather function
-1.3.6: two functions were added: time and weather. A major flaw in the calculator function is patched
+Alpha 1.0.0: the program basics are written and files are created
+Alpha 1.1.0: login and help is implemented
+Alpha 1.2.0 pre-release: a buggy version with a calculator and other bug fixes for previous releases
+Alpha 1.2.1: the calculator is fixed and one more function is added. Other bugs have been fixed as well
+Alpha 1.2.3: the calculator is fixed further and one more function is added. Other bugs have been fixed as well
+Alpha 1.3.0 pre-release: a dictionary is being implemented
+Alpha 1.3.0: a dictionary/define function is implemented with a few graphical glitches only when long definitions are displayed.
+Alpha 1.3.6 pre-release: implementing time and weather function
+Alpha 1.3.6: two functions were added: time and weather. A major flaw in the calculator function is patched
 
 """
 
