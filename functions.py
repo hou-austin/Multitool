@@ -47,7 +47,7 @@ def validate_choice(user_input):
     elif (split_line_test(user_input) == True):
         mainframe(user_input)
     elif (any(c not in config.valid_cal_chars for c in user_input)):
-        print (user_input + " is not a valid choice!")
+        print ("'" + user_input + "'" + " is not a valid choice!")
     else:
         mainframe(user_input)
 
@@ -97,26 +97,25 @@ def choice_help():
             print ("\n" + config.description_cal + "\n")
         elif (user_input == "end"):
             print ("\n" + config.description_end + "\n")
+        elif (user_input == "define"):
+            print ("\n" + config.description_define + "\n")
 
 def define_word(user_define_input):
-    srch = str(user_define_input[1])
-    output_word = requests.get("http://dictionary.reference.com/browse/"+srch+"?s=t")
-    tree = html.fromstring("http://dictionary.reference.com/browse/" +srch+"?s=t".text)
-    definitions = tree.xpath('//div[@title="def-set"]/text()')
-    print (definitions)
-    """ items=re.findall('<meta name="description" content="'+".*$",output_word,re.MULTILINE)
-    for output_word in items:
-        y=output_word.replace('<meta name="description" content="','')
-        z=y.replace(' See more."/>','')
-        m=re.findall('at Dictionary.com, a free online dictionary with pronunciation, synonyms and translation. Look it up now! "/>',z)
-        if m==[]:
-            if z.startswith("Get your reference question answered by Ask.com"):
-                print ("Word not found!")
-            else:
-                print (z)
-    else:
-        print ("Word not found!")
-"""
+    try:
+        response = requests.get("http://dictionary.reference.com/browse/{}?s=t".format(user_define_input[1]))
+    except IndexError:
+        print("You have not entered a word!")
+        return
+    tree = html.fromstring(response.text)
+    title = tree.xpath('//title/text()')
+    print(title)
+    print("\n")
+    defs = tree.xpath('//div[@class="def-content"]/text()') # print(defs)
+    defs = '\n'.join(defs)
+    defs = defs.split('\n')
+    defs = [d for d in defs if d]
+    for d in defs:
+        print(d)
 
 def split_line_test(user_input):
     global user_define_input
