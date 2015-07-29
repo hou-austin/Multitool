@@ -99,8 +99,8 @@ def choice_help():
 
 def define_word(user_define_input):
     srch = str(user_define_input[1])
-    output_word=urllib.request.urlopen("http://dictionary.reference.com/browse/"+srch+"?s=t")
-    output_word=output_word.read()
+    output_word = urllib.request.urlopen("http://dictionary.reference.com/browse/"+srch+"?s=t")
+    output_word = output_word.read().decode('iso-8859-2')
     items=re.findall('<meta name="description" content="'+".*$",output_word,re.MULTILINE)
     for output_word in items:
         y=output_word.replace('<meta name="description" content="','')
