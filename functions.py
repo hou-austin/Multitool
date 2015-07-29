@@ -1,5 +1,6 @@
-import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re
+import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests
 from math import sqrt
+from lxml import html
 from urllib.request import urlopen, HTTPError
 re.compile('<title>(.*)</title>')
 
@@ -99,9 +100,11 @@ def choice_help():
 
 def define_word(user_define_input):
     srch = str(user_define_input[1])
-    output_word = urllib.request.urlopen("http://dictionary.reference.com/browse/"+srch+"?s=t")
-    output_word = output_word.read().decode('iso-8859-2')
-    items=re.findall('<meta name="description" content="'+".*$",output_word,re.MULTILINE)
+    output_word = requests.get("http://dictionary.reference.com/browse/"+srch+"?s=t")
+    tree = html.fromstring("http://dictionary.reference.com/browse/" +srch+"?s=t".text)
+    definitions = tree.xpath('//div[@title="def-set"]/text()')
+    print (definitions)
+    """ items=re.findall('<meta name="description" content="'+".*$",output_word,re.MULTILINE)
     for output_word in items:
         y=output_word.replace('<meta name="description" content="','')
         z=y.replace(' See more."/>','')
@@ -113,7 +116,7 @@ def define_word(user_define_input):
                 print (z)
     else:
         print ("Word not found!")
-
+"""
 
 def split_line_test(user_input):
     global user_define_input
