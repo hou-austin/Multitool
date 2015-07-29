@@ -1,6 +1,7 @@
-import os, sys, glob, math, random, login, gfx, config, time, urllib.request
+import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re
 from math import sqrt
 from urllib.request import urlopen, HTTPError
+re.compile('<title>(.*)</title>')
 
 def load_sequence_complete():
     print ("loading " + "-".join(gfx.load_sequence) + " |100%")
@@ -36,7 +37,7 @@ def password_login():
             print ("-".join(gfx.load_sequence) + " |invalid password!")
 
 def choice_selecter():
-    user_input = str(input("Hello there! How can I help? If you ever require assistance, type 'help': "))
+    user_input = str(input(" >>> "))
     return user_input
 
 def validate_choice(user_input):
@@ -98,13 +99,13 @@ def choice_help():
 
 def define_word(user_define_input):
     srch = str(user_define_input[1])
-    output_word=urllib2.urlopen("http://dictionary.reference.com/browse/"+srch+"?s=t")
+    output_word=urllib.request.urlopen("http://dictionary.reference.com/browse/"+srch+"?s=t")
     output_word=output_word.read()
     items=re.findall('<meta name="description" content="'+".*$",output_word,re.MULTILINE)
     for output_word in items:
         y=output_word.replace('<meta name="description" content="','')
         z=y.replace(' See more."/>','')
-        m=re.findall('at Dictionary.com, a free online dictionary with pronunciation,              synonyms and translation. Look it up now! "/>',z)
+        m=re.findall('at Dictionary.com, a free online dictionary with pronunciation, synonyms and translation. Look it up now! "/>',z)
         if m==[]:
             if z.startswith("Get your reference question answered by Ask.com"):
                 print ("Word not found!")
