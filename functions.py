@@ -110,7 +110,7 @@ def define_word(user_define_input):
     title = tree.xpath('//title/text()')
     print(title)
     print("\n")
-    defs = tree.xpath('//div[@class="def-content"]/text()') # print(defs)
+    defs = tree.xpath('//span[@class="def-content"]/text()') # print(defs)
     defs = '\n'.join(defs)
     defs = defs.split('\n')
     defs = [d for d in defs if d]
