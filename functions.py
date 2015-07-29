@@ -32,3 +32,10 @@ def password_login():
                 print ("-".join(gfx.load_sequence) + " |invalid password!")
         except TypeError:
             print ("-".join(gfx.load_sequence) + " |invalid password!")
+
+def verify_credentials():
+    print ("verifying credentials: " + "-".join(gfx.load_sequence))
+    if (username_login == True & password_login == True):
+        print ("- credentials verified!")
+    else:
+        print ("Incorrect credentials, shutting down program!")

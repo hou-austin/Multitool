@@ -6,3 +6,5 @@ dirs = os.listdir( path )
 functions.load_sequence_complete()
 
 functions.username_login()
+functions.password_login()
+functions.verify_credentials()
