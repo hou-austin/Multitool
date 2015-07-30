@@ -1,11 +1,16 @@
-import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests, encryption_admin
+#---------- prerequisite code
+import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests, adminconsole_commands
 import math as mathlist
 from lxml import html
 from urllib.request import urlopen, HTTPError
 from time import gmtime, strftime
 from pprint import pprint
 math_list = dir(mathlist)
+global activestate
+activestate = False
 re.compile('<title>(.*)</title>')
+
+#---------- function list starts here
 
 def load_sequence_complete():
     print ("loading " + "-".join(gfx.load_sequence) + " |100%")
@@ -40,15 +45,6 @@ def password_login():
         except TypeError:
             print ("-".join(gfx.load_sequence) + " | invalid password!")
 
-def password_admin():
-    password = input("To use the administrator console/shell, please type in the admin password: ")
-    if (encryption_admin.admin_decrypt(password)):
-        print("success!")
-        return
-    print ("failure!")
-    return
-
-
 def choice_selecter(): #askes the user for input/command
     user_input = str(input(" >>> "))
     return user_input
@@ -63,7 +59,7 @@ def validate_choice(user_input):
     elif not any([user_input in config.valid_cal_statements or c in config.valid_cal_chars for c in user_input]):
         print ("'" + user_input + "'" + " is not a valid choice!")
     else:
-        mainframe(user_input)
+        calculator(user_input)
 
 def mainframe(user_input): #links input to function
     if (user_input == "end"):
@@ -79,8 +75,30 @@ def mainframe(user_input): #links input to function
             define_word(user_define_input)
         if (user_define_input[0] == "weather"):
             show_weather(user_define_input)
+    elif (user_input == "adminconsole"): #activate adminconsole, looks for ADMINKEY first
+        warning = input("\n[WARNING]: ADMINCONSOLE IS A COMMAND FOR DEBUGGING AN MAY CAUSE HARM TO YOUR COMPUTER, DO YOU WISH TO CONTINUE? ENTER [Y] TO CONTINUE, ENTER ANYTING TO CANCEL: ")
+        if (warning == "y"):
+            print("\n Proceeding -\n")
+            if (import_encryption_admin() == True):
+                password = input("Enter ADMINKEY: ")
+                if (encryption_admin.admin_decrypt(password) == True):
+                    print ("\n[ADMINCONSOLE] is now active\n")
+                    activestate = True
+                    active_adminconsole(activestate)
+                else:
+                    activestate = False
+                    print ("\n[ADMINCONSOLE] activation has failed: Incorrect ADMINKEY\n")
     else:
         calculator(user_input)
+
+def import_encryption_admin(): #tries to look for encryption_admin file to import
+    try:
+        global encryption_admin
+        import encryption_admin
+        return True
+    except ImportError:
+        print ("\nThe required files are not present on your device, operation cancled -\n")
+        return False
 
 def find_illegal(user_input): #if there is a illegal command in calculator input, return False
     #a = re.sub(r'\([^)]*\)', '', user_input) #deletes quotations and everything inside them
@@ -119,7 +137,7 @@ def cal_input_replace(user_input): #replaces math function with math.function
 def choice_help():
     print ("This program can currently do these things: %s" % (" - ".join(config.valid_choices)))
     while True:
-        user_input = input(" Would you like to know more about these functions? Enter the choices listed above to proceed, no to cancel: ")
+        user_input = input("\nWould you like to know more about these functions? Enter the choices listed above to proceed, enter [NO] to cancel: ")
         if (user_input == "help"):
             print ("\n" + config.description_help + "\n")
         elif (user_input == "calculator"):
@@ -130,8 +148,12 @@ def choice_help():
             print ("\n" + config.description_define + "\n")
         elif (user_input == "time"):
             print ("\n" + config.description_time + "\n")
+        elif (user_input == "adminconsole"):
+            print ("\n" + config.description_adminconsole + "\n")
         elif (user_input == "no"):
             return
+        else:
+            print ("Please print something in the list above -\n")
 
 def define_word(user_define_input):
     try:
@@ -144,6 +166,8 @@ def define_word(user_define_input):
     print(title)
     print("\n")
     defs = tree.xpath('//div[@class="def-content"]/text()')
+    defs = ''.join(defs)
+    defs = defs.replace("() ", "")
     defs = defs.split('\n')
     defs = [d for d in defs if d]
     for d in defs:
@@ -174,9 +198,9 @@ def show_weather(user_define_input):
     celcius_norm_temp = str(kelvin_celcius(kelvin_norm_temp))
     celcius_max_temp = str(kelvin_celcius(kelvin_max_temp))
     celcius_min_temp = str(kelvin_celcius(kelvin_min_temp))
-    print ("Normal temperature is: %.1f" % (celcius_norm_temp))
-    print ("Highest temperature is: %.1f" % (celcius_max_temp))
-    print ("Lowest temperature is: %.1f" % (celcius_min_temp))
+    print ("Normal temperature is: %.1f" % float(celcius_norm_temp))
+    print ("Highest temperature is: %.1f" % float(celcius_max_temp))
+    print ("Lowest temperature is: %.1f" % float(celcius_min_temp))
     print ("\n")
 
 def kelvin_celcius(temp):
@@ -184,3 +208,14 @@ def kelvin_celcius(temp):
     temp = float(temp)
     output_temp = (temp - kelvin)
     return output_temp
+
+def active_adminconsole(activestate):
+    while activestate == True:
+        command = input(">>> ")
+        if (command == "adminconsole.exit()"):
+            adminconsole_commands.exit()
+            return
+        try:
+            after_exec = exec(command)
+        except:
+            print ("[ADMINCONSOLE]: ", sys.exc_info()[0])
