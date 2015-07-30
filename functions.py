@@ -1,6 +1,7 @@
-#---------- prerequisite code
-import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests, adminconsole_commands
+#---------- prerequisite code start
+import os, sys, glob, math, random, gfx, config, time, urllib.request, re, requests, adminconsole_commands, encryption_standard
 import math as mathlist
+import encryption_standard as encrypt_s
 from lxml import html
 from urllib.request import urlopen, HTTPError
 from time import gmtime, strftime
@@ -9,8 +10,7 @@ math_list = dir(mathlist)
 global activestate
 activestate = False
 re.compile('<title>(.*)</title>')
-
-#---------- function list starts here
+#---------- prerequisite code end
 
 def load_sequence_complete():
     print ("loading " + "-".join(gfx.load_sequence) + " |100%")
@@ -19,35 +19,32 @@ def load_sequence_complete():
     time.sleep(0.05)
     print ("version: " + config.version_number)
 
-def username_login():
-    while True:
-        inusername = input("enter username: ")
-        try:
-            inusername = str(inusername)
-            if (inusername == login.username):
-                print ("-".join(gfx.load_sequence) + " | valid username!")
-                return True
-            elif (inusername != login.username):
-                print ("-".join(gfx.load_sequence) + " | invalid username!")
-        except TypeError:
-            print ("-".join(gfx.load_sequence) + " | invalid username!")
+def check_user_present():
+    with open("login.txt", "r") as login:
+        contents = login.read()
+        if (contents == ""):
+            return False
+        else:
+            return True
 
-def password_login():
+def login():
     while True:
-        inpassword = input("enter password: ")
-        try:
-            inpassword = str(inpassword)
-            if (inpassword == login.password):
-                print ("-".join(gfx.load_sequence) + " | valid password!")
-                return True
-            elif (inpassword != login.password):
-                print ("-".join(gfx.load_sequence) + " | invalid password!")
-        except TypeError:
-            print ("-".join(gfx.load_sequence) + " | invalid password!")
+        username = input("Enter your username: ")
+        password = input("Enter your password: ")
+        username = username.lower()
+        password = password.encode("utf-8")
+        if (encryption_standard.check_login(username, password)):
+            print ("Welcome back %s!\n" % username)
+            break
+        else:
+            print ("Invalid login as %s\n" % username)
+
+def new_user_login(username, password):
+    encryption_standard.new_user(username, password)
 
 def choice_selecter(): #askes the user for input/command
     user_input = str(input(" >>> "))
-    return user_input
+    return user_input.lower()
 
 def validate_choice(user_input):
     if (user_input == ""):
@@ -88,8 +85,38 @@ def mainframe(user_input): #links input to function
                 else:
                     activestate = False
                     print ("\n[ADMINCONSOLE] activation has failed: Incorrect ADMINKEY\n")
+    elif (user_input == "changelogin"):
+        change_logincrentials()
     else:
         calculator(user_input)
+
+"""def change_logincrentials(): #will be fixed so it will work with new encryption method
+    while True:
+        check_username = input("Enter current username: ")
+        check_password = input("Enter current password: ")
+        while True:
+            if (encrypt_s.standard_decrypt_username(check_username)):
+                if (encrypt_s.standard_decrypt_password(check_password)):
+                    new_username = input("Enter new username: ")
+                    new_password = input("Enter new password: ")
+                    if (new_username == new_password):
+                        print ("Cannot set them as the same!")
+                        continue
+                    with open("encryption_standard.py", "r") as file_in:
+                        old_username = (encrypt_s.standard_change(check_username)).decode("utf-8")
+                        old_password = (encrypt_s.standard_change(check_password)).decode("utf-8")
+                        contents = file_in.read()
+                        contents = contents.replace(old_username, encrypt_s.standard_change(new_username).decode("utf-8"))
+                        contents = contents.replace(old_password, encrypt_s.standard_change(new_password).decode("utf-8"))
+                        with open("encryption_standard.py", "w") as file_out:
+                            file_out.write(contents)
+                        print ("Username and password has been changed!")
+                        break
+        else:
+            print ("Invalid username or password was entered! Try again -\n")
+            continue
+        break
+"""
 
 def import_encryption_admin(): #tries to look for encryption_admin file to import
     try:
@@ -135,9 +162,10 @@ def cal_input_replace(user_input): #replaces math function with math.function
     return user_input.replace("~pi", "math.pi").replace("~e", "math.e").replace("ans", str(config.cal_ans)) #replaces ~constants with math.constants
 
 def choice_help():
-    print ("This program can currently do these things: %s" % (" - ".join(config.valid_choices)))
+    print ("\nThis program can currently do these things: %s" % (" - ".join(config.valid_choices)))
     while True:
         user_input = input("\nWould you like to know more about these functions? Enter the choices listed above to proceed, enter [NO] to cancel: ")
+        user_input = user_input.lower()
         if (user_input == "help"):
             print ("\n" + config.description_help + "\n")
         elif (user_input == "calculator"):

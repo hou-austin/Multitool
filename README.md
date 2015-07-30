@@ -4,3 +4,6 @@ To use this program, the user must install these in Terminal (Mac):
 
  - pip install requests
  - pip install lxml
+
+Safety:
+ - The login credentials are encrypted so that one password (ie: password) can have 10000 forms, therefore making it very difficult to crack. So do not worry about your passwords stored in this program.

@@ -1,6 +1,8 @@
-import os, login, gfx, functions
+#---------- prerequisite code start
+import os
+#---------- prerequisite code end
 
-version_number = ("Alpha 1.5.0") #version number of the program
+version_number = ("Alpha 1.6.0") #version number of the program
 """
 version history -----
 Alpha 1.0.0: the program basics are written and files are created
@@ -16,16 +18,18 @@ Alpha 1.4.0 pre-release: the calculator function will be changed where mathemati
 Alpha 1.4.0: the calculator function is changed where mathematical constants and other equations/expressions can be used without compromising security.
 Alpha 1.5.0 pre-release: an admin password is added while an admin console is being implemented.
 Alpha 1.5.0: an adminconsole with custom functions in addition to regular python commands is added although it requires a local ADMINKEY decryption file and the ADMINKEY in order to be accessed.
+Alpha 1.6.0 pre-release: a huge security overhaul to the login system will be implemented
+Alpha 1.6.0: a huge security overhaul to the login system is added along with a "tutorial" system upon first launch
 
 """
 
-default_path = "/Users/DarkLeviathan/GitHub/Multitool/" #creates path to folder (can be changed by commenting this line out and creating new one)
-default_dirs = os.listdir( default_path )
+#default_path = "/foo*" #creates path to default folder (can be changed by replacing foo* and uncommenting this line and the one below it)
+#default_dirs = os.listdir(default_path) #uncomment this line if you wish to add a directory
 cal_ans = 0 #edit this value (keep .0) to see what the prev_output in the calculator is
 valid_cal_chars = ("~0123456789-+/*()\n") #edit this to change the accepted characters for calculation
 #invalid_cal_char_test = ("1""2""3""4""5""6""7""8""9""0""q""w""e""r""tyuiop")
 valid_cal_statements = ["ans", "pi", "e", "sqrt"]
-valid_choices = ("help", "calculator", "end", "define", "time", "weather", "adminconsole") #edit this to change/add validated choices
+valid_choices = ("help", "calculator", "end", "define", "time", "weather", "adminconsole", "changelogin") #edit this to change/add validated choices
 illegal_statements = ["quit", "os.", "sys.", "shutil.", "import", "path", "dir", "builtins", "_", "{", "}", "lambda"] #edit this to change/add invalid statements in the calculator program
 description_help = ("[HELP] - You are currently in the help function, which is used to learn more about functions within this program. It can also contain future planned updates from time to time.") #edit this to change the message shown when user asks for description of help
 description_cal = ("[CALCULATOR] - The calcuator is buit directly in so you do not have to call it with the 'calculator' command. You can simply enter (ex): 1*1 to start calculating. A '~' must be used in front of a constant to work, ie: ~pi, ~e") #edit this to change the message shown when user asks for description of calculator
