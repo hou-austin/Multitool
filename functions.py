@@ -20,12 +20,16 @@ def load_sequence_complete():
     print ("version: " + config.version_number)
 
 def check_user_present():
-    with open("login.txt", "r") as login:
-        contents = login.read()
-        if (contents == ""):
+    try:
+        with open("login.txt", "r") as login:
+            contents = login.read()
+            if (contents == ""):
+                return False
+            else:
+                return True
+    except:
+        with open("login.txt", "a") as login:
             return False
-        else:
-            return True
 
 def login():
     while True:
