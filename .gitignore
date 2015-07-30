@@ -6,4 +6,4 @@ encryption_admin.py
 test_codes.py
 
 cleverbot.py
-login.txt
+*.txt
