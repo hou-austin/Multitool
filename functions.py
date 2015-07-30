@@ -1,9 +1,10 @@
 import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests
-from math import sqrt
+import math as mathlist
 from lxml import html
 from urllib.request import urlopen, HTTPError
 from time import gmtime, strftime
 from pprint import pprint
+math_list = dir(mathlist)
 re.compile('<title>(.*)</title>')
 
 def load_sequence_complete():
@@ -39,27 +40,28 @@ def password_login():
         except TypeError:
             print ("-".join(gfx.load_sequence) + " | invalid password!")
 
-def choice_selecter():
+def choice_selecter(): #askes the user for input/command
     user_input = str(input(" >>> "))
     return user_input
 
 def validate_choice(user_input):
-    if (user_input in config.valid_choices):
+    if (user_input == ""):
+        return
+    elif (user_input in config.valid_choices):
         mainframe(user_input)
     elif (split_line_test(user_input) == True):
         mainframe(user_input)
-    elif (any(c not in config.valid_cal_chars for c in user_input)):
+    elif not any([user_input in config.valid_cal_statements or c in config.valid_cal_chars for c in user_input]):
         print ("'" + user_input + "'" + " is not a valid choice!")
     else:
         mainframe(user_input)
 
-def mainframe(user_input):
+def mainframe(user_input): #links input to function
     if (user_input == "end"):
         quit()
     elif (user_input == "help"):
-        print ("0")
         choice_help()
-    elif (user_define_input == "define"):
+    elif (split_line_test(user_input) == "define"):
         define_word(user_define_input)
     elif (user_input == "time"):
         show_time()
@@ -71,30 +73,39 @@ def mainframe(user_input):
     else:
         calculator(user_input)
 
-def prev_ans():
-    try:
-        return config.prev_output
-    except NameError:
-        return 0
+def find_illegal(user_input): #if there is a illegal command in calculator input, return False
+    #a = re.sub(r'\([^)]*\)', '', user_input) #deletes quotations and everything inside them
+    for illegal_string in config.illegal_statements:
+        if (illegal_string in user_input):
+            return False
+    return True
 
 def calculator(user_input):
-    global ans
-    if any(c not in config.valid_cal_chars for c in user_input):
-        print("- Invalid Equation | Bad characters")
-        return
-    elif not any("ans" in user_input or c in user_input for c in "0123456789"):
-        print("- Invalid Equation | No numbers found")
+    user_input_test = find_illegal(user_input)
+    if (user_input_test == False):
+        print("Illegal statement -")
         return
     sys.stdout.write("calculating " + "-".join(gfx.load_sequence))
     time.sleep(0.3)
     print (" | 100%")
     try:
-        ans = eval(user_input)
+        user_input = str(cal_input_replace(user_input))
+        config.cal_ans = eval(str(user_input))
     except (SyntaxError, ZeroDivisionError, NameError, TypeError, ValueError):
         print ("- Invalid Equation | Error")
         return
-    config.ans = ans
-    print (ans)
+    print (config.cal_ans)
+
+def cal_input_replace(user_input): #replaces math function with math.function
+    for item in math_list:
+        if (item == "e" or item == "pi"): #constants are special exception
+            continue
+        elif (item in user_input):
+            new_item = ("math." + item)
+            user_input = user_input.replace(item, new_item)
+    print (user_input)
+
+    return user_input.replace("~pi", "math.pi").replace("~e", "math.e").replace("ans", str(config.cal_ans)) #replaces ~constants with math.constants
 
 def choice_help():
     print ("This program can currently do these things: %s" % (" - ".join(config.valid_choices)))
@@ -108,6 +119,10 @@ def choice_help():
             print ("\n" + config.description_end + "\n")
         elif (user_input == "define"):
             print ("\n" + config.description_define + "\n")
+        elif (user_input == "time"):
+            print ("\n" + config.description_time + "\n")
+        elif (user_input == "no"):
+            return
 
 def define_word(user_define_input):
     try:
@@ -120,7 +135,6 @@ def define_word(user_define_input):
     print(title)
     print("\n")
     defs = tree.xpath('//div[@class="def-content"]/text()')
-    defs = '\n'.join(defs)
     defs = defs.split('\n')
     defs = [d for d in defs if d]
     for d in defs:
