@@ -2,3 +2,5 @@
 __pycache__
 *.pyc
 encryption_admin.py
+
+test_codes.py
