@@ -2,9 +2,6 @@ import os, sys, glob, math, random, login, gfx, config, functions, time, encrypt
 
 functions.load_sequence_complete()
 
-functions.password_admin()
-
-"""
 functions.username_login()
 time.sleep(0.05)
 functions.password_login()
@@ -17,4 +14,3 @@ program = True
 while (program == True):
     user_input = functions.choice_selecter()
     functions.validate_choice(user_input)
-"""
