@@ -1,4 +1,4 @@
-import os, sys, glob, math, random, login, gfx, functions, time
+import os, sys, glob, math, random, login, gfx, functions, time, encryption_standard
 
 version_number = ("Alpha 1.4.0") #version number of the program
 """

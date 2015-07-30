@@ -1,4 +1,4 @@
-import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests
+import os, sys, glob, math, random, login, gfx, config, time, urllib.request, re, requests, encryption_admin
 import math as mathlist
 from lxml import html
 from urllib.request import urlopen, HTTPError
@@ -39,6 +39,15 @@ def password_login():
                 print ("-".join(gfx.load_sequence) + " | invalid password!")
         except TypeError:
             print ("-".join(gfx.load_sequence) + " | invalid password!")
+
+def password_admin():
+    password = input("To use the administrator console/shell, please type in the admin password: ")
+    if (encryption_admin.admin_decrypt(password)):
+        print("success!")
+        return
+    print ("failure!")
+    return
+
 
 def choice_selecter(): #askes the user for input/command
     user_input = str(input(" >>> "))
