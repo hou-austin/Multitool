@@ -1,3 +1,6 @@
+#---------- prerequisite code start
+#---------- prerequisite code end
+
 def exit():
     print ("\n[ADMINCONSOLE]: Exiting -\n")
     return False

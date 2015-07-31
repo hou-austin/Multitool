@@ -60,7 +60,7 @@ def validate_choice(user_input):
         mainframe(user_input)
     elif (split_line_test(user_input) == True):
         mainframe(user_input)
-    elif not any([user_input in config.valid_cal_statements or c in config.valid_cal_chars for c in user_input]):
+    elif not any(c in config.valid_cal_chars for c in user_input):
         print ("'" + user_input + "'" + " is not a valid choice!")
     else:
         calculator(user_input)
@@ -79,6 +79,10 @@ def mainframe(user_input): #links input to function
             define_word(user_define_input)
         if (user_define_input[0] == "weather"):
             show_weather(user_define_input)
+    elif (user_input == "changelogin"): #reroutes changelogin input to change_logincredentials
+        change_logincredentials()
+    elif (user_input == "newlogin"): #reroutes newlogin input to create_newuser
+        create_newuser()
     elif (user_input == "adminconsole"): #activate adminconsole, looks for ADMINKEY first
         warning = input("\n[WARNING]: ADMINCONSOLE IS A COMMAND FOR DEBUGGING AN MAY CAUSE HARM TO YOUR COMPUTER, DO YOU WISH TO CONTINUE? ENTER [Y] TO CONTINUE, ENTER ANYTING TO CANCEL: ")
         if (warning == "y"):
@@ -95,33 +99,45 @@ def mainframe(user_input): #links input to function
     elif (user_input == "changelogin"):
         change_logincrentials()
 
-"""def change_logincrentials(): #will be fixed so it will work with new encryption method
-    while True:
-        check_username = input("Enter current username: ")
-        check_password = input("Enter current password: ")
-        while True:
-            if (encrypt_s.standard_decrypt_username(check_username)):
-                if (encrypt_s.standard_decrypt_password(check_password)):
-                    new_username = input("Enter new username: ")
-                    new_password = input("Enter new password: ")
-                    if (new_username == new_password):
-                        print ("Cannot set them as the same!")
-                        continue
-                    with open("encryption_standard.py", "r") as file_in:
-                        old_username = (encrypt_s.standard_change(check_username)).decode("utf-8")
-                        old_password = (encrypt_s.standard_change(check_password)).decode("utf-8")
-                        contents = file_in.read()
-                        contents = contents.replace(old_username, encrypt_s.standard_change(new_username).decode("utf-8"))
-                        contents = contents.replace(old_password, encrypt_s.standard_change(new_password).decode("utf-8"))
-                        with open("encryption_standard.py", "w") as file_out:
-                            file_out.write(contents)
-                        print ("Username and password has been changed!")
-                        break
-        else:
-            print ("Invalid username or password was entered! Try again -\n")
+def change_logincredentials(): #will be fixed so it will work with new encryption method
+    n = 0
+    while n<3:
+        username = input("Enter current username: ")
+        password = input("Enter current password: ")
+        if (encryption_standard.check_user_exist(username, password) == False):
+            print ("Invalid credentials, enter current username and password!")
+            n = n+1
             continue
-        break
-"""
+        else:
+            new_username = input("Enter new username: ")
+            new_username = new_username.lower()
+            if (" " in username):
+                print ("\nInvalid username chosen - username cannot contain spaces!\n")
+                continue
+            new_password = input("Enter new password: ")
+            old_username = username
+            old_password = password
+            encryption_standard.change_credentials(new_username, new_password, old_username, old_password)
+            print ("Password changed successfully!\n")
+            return
+    print ("Function cancelled: too many attempts!\n")
+
+def create_newuser():
+    n = 0
+    while n<3:
+        print ("Create new user -\n")
+        username = input("Enter new username: ")
+        username = username.lower()
+        if (" " in username):
+            print ("\nInvalid username chosen - username cannot contain spaces!\n")
+            continue
+        password = input("Enter new password: ")
+        password = password.encode("utf-8")
+        if (encrypt_s.check_user_exist(username, password)):
+            print ("User already exists!\n")
+        else:
+            encrypt_s.new_user(username, password)
+            break
 
 def import_encryption_admin(): #tries to look for encryption_admin file to import
     try:
@@ -129,7 +145,7 @@ def import_encryption_admin(): #tries to look for encryption_admin file to impor
         import encryption_admin
         return True
     except ImportError:
-        print ("\nThe required files are not present on your device, operation cancled -\n")
+        print ("\nThe required files are not present on your device, operation cancelled -\n")
         return False
 
 def find_illegal(user_input): #if there is a illegal command in calculator input, return False
@@ -183,6 +199,8 @@ def choice_help():
             print ("\n" + config.description_weather + "\n")
         elif (user_input == "adminconsole"):
             print ("\n" + config.description_adminconsole + "\n")
+        elif (user_input == "changelogin"):
+            print ("\n" + config.description_changelogin + "\n")
         elif (user_input == "no"):
             return
         else:
