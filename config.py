@@ -2,7 +2,7 @@
 import os
 #---------- prerequisite code end
 
-version_number = ("Alpha 1.6.2") #version number of the program
+version_number = ("Alpha 1.6.4") #version number of the program
 """
 version history -----
 Alpha 1.0.0: the program basics are written and files are created
@@ -21,6 +21,8 @@ Alpha 1.5.0: an adminconsole with custom functions in addition to regular python
 Alpha 1.6.0 pre-release: a huge security overhaul to the login system will be implemented
 Alpha 1.6.0: a huge security overhaul to the login system is added along with a "tutorial" system upon first launch
 Alpha 1.6.2: bug fixes for the new login system. password inputs are now blanked out and valid inputs list has been fixed
+Alpha 1.6.4 pre-release: bug fixes in adminconsole and help and more custom functions made for debugging are added to adminconsole
+Alpha 1.6.4: bug fixes in adminconsole and help and more custom functions made for debugging are added to adminconsole
 
 """
 
@@ -35,7 +37,7 @@ illegal_statements = ["quit", "os.", "sys.", "shutil.", "import", "path", "dir",
 description_help = ("[HELP] - You are currently in the help function, which is used to learn more about functions within this program. It can also contain future planned updates from time to time.") #edit this to change the message shown when user asks for description of help
 description_cal = ("[CALCULATOR] - The calcuator is buit directly in so you do not have to call it with the 'calculator' command. You can simply enter (ex): 1*1 to start calculating. A '~' must be used in front of a constant to work, ie: ~pi, ~e") #edit this to change the message shown when user asks for description of calculator
 description_end = ("[END] - This command can be used to end the program when it prompts you for the next request.") #edit this to change the message shown when user asks for description of the end command
-description_define = ("[DEFINE] - This command requires a second word after it so it can search the definition up and dis play it.") #displays the description for the define function
+description_define = ("[DEFINE] - This command requires a second word after it so it can search the definition up and display it.") #displays the description for the define function
 description_time = ("[TIME] - This command displays time in this format: 12:00AM PST on July 29, 2015 ") #displays the description of the time function
 description_weather = ("[WEATHER] - This command requires a second word (a city name with no spaces if its is a multi-word city name) after it. It will show the temperature of the city. More outputs will be added.") #displays the description of the weather function
 description_adminconsole = ("[ADMINCONSOLE] - This command  requires a key file in the Multitool folder with the password to it. If the correct password is entered, the user will be able to use the python shell like how it can usually be used within the multitool program. It is made for debugging although it can be an extremely powerful tool with custom functions in addition to regular python commands.") #displays the description of the adminconsole function

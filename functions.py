@@ -1,5 +1,5 @@
 #---------- prerequisite code start
-import os, sys, glob, math, random, gfx, config, time, urllib.request, re, requests, adminconsole_commands, encryption_standard, getpass
+import os, sys, glob, math, random, gfx, config, time, urllib.request, re, requests, adminconsole_commands, encryption_standard, getpass, traceback
 import math as mathlist
 import encryption_standard as encrypt_s
 from lxml import html
@@ -11,6 +11,9 @@ global activestate
 activestate = False
 re.compile('<title>(.*)</title>')
 #---------- prerequisite code end
+
+def test():
+    print (True)
 
 def load_sequence_complete():
     print ("loading " + "-".join(gfx.load_sequence) + " |100%")
@@ -183,7 +186,7 @@ def choice_help():
         elif (user_input == "no"):
             return
         else:
-            print ("Please print something in the list above -\n")
+            print ("Please enter something in the list above -\n")
 
 def define_word(user_define_input):
     try:
@@ -242,10 +245,14 @@ def kelvin_celcius(temp):
 def active_adminconsole(activestate):
     while activestate == True:
         command = input(">>> ")
-        if (command == "adminconsole.exit()"):
+        if (command=="adminconsole.exit()"):
             adminconsole_commands.exit()
-            return
+            activestate = False
+            break
+        if ("adminconsole." in command):
+            command = command.replace("adminconsole.", "adminconsole_commands.")
         try:
             after_exec = exec(command)
         except:
             print ("[ADMINCONSOLE]: ", sys.exc_info()[0])
+            print ("\n" + traceback.format_exc())
