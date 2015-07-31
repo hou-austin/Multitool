@@ -1,5 +1,5 @@
 #---------- prerequisite code start
-import os, sys, glob, math, random, gfx, config, time, urllib.request, re, requests, adminconsole_commands, encryption_standard
+import os, sys, glob, math, random, gfx, config, time, urllib.request, re, requests, adminconsole_commands, encryption_standard, getpass
 import math as mathlist
 import encryption_standard as encrypt_s
 from lxml import html
@@ -34,7 +34,7 @@ def check_user_present():
 def login():
     while True:
         username = input("Enter your username: ")
-        password = input("Enter your password: ")
+        password = getpass.getpass("Enter your password: ")
         username = username.lower()
         password = password.encode("utf-8")
         if (encryption_standard.check_login(username, password)):
@@ -81,7 +81,7 @@ def mainframe(user_input): #links input to function
         if (warning == "y"):
             print("\n Proceeding -\n")
             if (import_encryption_admin() == True):
-                password = input("Enter ADMINKEY: ")
+                password = getpass.getpass("Enter ADMINKEY: ")
                 if (encryption_admin.admin_decrypt(password) == True):
                     print ("\n[ADMINCONSOLE] is now active\n")
                     activestate = True
@@ -91,8 +91,6 @@ def mainframe(user_input): #links input to function
                     print ("\n[ADMINCONSOLE] activation has failed: Incorrect ADMINKEY\n")
     elif (user_input == "changelogin"):
         change_logincrentials()
-    else:
-        calculator(user_input)
 
 """def change_logincrentials(): #will be fixed so it will work with new encryption method
     while True:
@@ -145,13 +143,13 @@ def calculator(user_input):
         return
     sys.stdout.write("calculating " + "-".join(gfx.load_sequence))
     time.sleep(0.3)
-    print (" | 100%")
     try:
         user_input = str(cal_input_replace(user_input))
         config.cal_ans = eval(str(user_input))
     except (SyntaxError, ZeroDivisionError, NameError, TypeError, ValueError):
         print ("- Invalid Equation | Error")
         return
+    print (" | 100%")
     print (config.cal_ans)
 
 def cal_input_replace(user_input): #replaces math function with math.function
@@ -161,8 +159,6 @@ def cal_input_replace(user_input): #replaces math function with math.function
         elif (item in user_input):
             new_item = ("math." + item)
             user_input = user_input.replace(item, new_item)
-    print (user_input)
-
     return user_input.replace("~pi", "math.pi").replace("~e", "math.e").replace("ans", str(config.cal_ans)) #replaces ~constants with math.constants
 
 def choice_help():
@@ -180,6 +176,8 @@ def choice_help():
             print ("\n" + config.description_define + "\n")
         elif (user_input == "time"):
             print ("\n" + config.description_time + "\n")
+        elif (user_input == "weather"):
+            print ("\n" + config.description_weather + "\n")
         elif (user_input == "adminconsole"):
             print ("\n" + config.description_adminconsole + "\n")
         elif (user_input == "no"):

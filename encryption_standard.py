@@ -23,6 +23,7 @@ def check_login(username, password):
         salt = salt.encode("utf-8")
         hasher.update(salt)
         input_password = repr(hasher.digest())
+        input_password = input_password[2:][:-1]
         if (hash_password == input_password):
             return True
         return False
@@ -40,7 +41,6 @@ def new_user(username, password):
         hasher.update(salt)
         input_password = repr(hasher.digest())
         salt = salt.decode("utf-8")
+        input_password = input_password[2:][:-1]
         login.write(input_password + " " + salt + "\n")
         print ("New user %s was created!" % username)
-
-#encode input to utf-8

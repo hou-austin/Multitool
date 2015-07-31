@@ -1,5 +1,5 @@
 #---------- prerequisite code start
-import os, sys, glob, math, random, gfx, config, functions, time, requests, adminconsole_commands, urllib.request,re
+import os, sys, glob, math, random, gfx, config, functions, time, requests, adminconsole_commands, urllib.request, re, getpass
 #---------- prerequisite code end
 
 functions.load_sequence_complete()
@@ -9,7 +9,7 @@ elif (functions.check_user_present()==False):
     print ("\nWelcome to Multitool! Because this program has not been setup yet, no credentials have been stored (don't worry, the credentials are safely encrypted!). So please follow the instructions below to setup Multitool.\n")
     while True:
         username = input("Enter your desired username: ")
-        password = input("Enter your desired password: ")
+        password = getpass.getpass("Enter your desired password: ")
         username = username.lower()
         password = password.encode("utf-8")
         if (" " in username):
