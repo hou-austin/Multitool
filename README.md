@@ -15,8 +15,9 @@ Other prerequisites:
 
  - Python 3.4.3: http://python.org
 
-Optional downloads for developing:
+Optional downloads/steps for developing:
 
+ - GitHub account
  - Atom editor: http://atom.io
 
 Safety:
