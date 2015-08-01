@@ -60,7 +60,7 @@ def validate_choice(user_input):
         mainframe(user_input)
     elif (split_line_test(user_input) == True):
         mainframe(user_input)
-    elif not any(c in config.valid_cal_chars for c in user_input):
+    elif not any([user_input in config.valid_cal_commands or c in config.valid_cal_chars for c in user_input]):
         print ("'" + user_input + "'" + " is not a valid choice!")
     else:
         calculator(user_input)
@@ -83,6 +83,12 @@ def mainframe(user_input): #links input to function
         change_logincredentials()
     elif (user_input == "newlogin"): #reroutes newlogin input to create_newuser
         create_newuser()
+    elif (user_input == "clearscreen"):
+        clearscreen()
+    elif (user_input == "encryptfile"):
+        encrypt_file()
+    elif (user_input == "decryptfile"):
+        decrypt_file()
     elif (user_input == "adminconsole"): #activate adminconsole, looks for ADMINKEY first
         warning = input("\n[WARNING]: ADMINCONSOLE IS A COMMAND FOR DEBUGGING AN MAY CAUSE HARM TO YOUR COMPUTER, DO YOU WISH TO CONTINUE? ENTER [Y] TO CONTINUE, ENTER ANYTING TO CANCEL: ")
         if (warning == "y"):
@@ -98,6 +104,16 @@ def mainframe(user_input): #links input to function
                     print ("\n[ADMINCONSOLE] activation has failed: Incorrect ADMINKEY\n")
     elif (user_input == "changelogin"):
         change_logincrentials()
+
+def encrypt_file():
+    print ("\n[WARNING]! Doing this may result in the loss of data or it may cause this program to not work and this encryption is not entirely secure unlike the pasword encrytion!\n")
+    path = input("Enter file path or name if it is already in folder: ")
+    encrypt_s.encrypt_file(path)
+
+def decrypt_file():
+    print ("\n[WARNING]! Doing this may result in the loss of data or it may cause this program to not work!\n")
+    path = input("Enter file path or name if it is already in folder: ")
+    encrypt_s.decrypt_file(path)
 
 def change_logincredentials(): #will be fixed so it will work with new encryption method
     n = 0
@@ -131,7 +147,7 @@ def create_newuser():
         if (" " in username):
             print ("\nInvalid username chosen - username cannot contain spaces!\n")
             continue
-        password = input("Enter new password: ")
+        password = getpass.getpass("Enter new password: ")
         password = password.encode("utf-8")
         if (encrypt_s.check_user_exist(username, password)):
             print ("User already exists!\n")
@@ -181,7 +197,7 @@ def cal_input_replace(user_input): #replaces math function with math.function
     return user_input.replace("~pi", "math.pi").replace("~e", "math.e").replace("ans", str(config.cal_ans)) #replaces ~constants with math.constants
 
 def choice_help():
-    print ("\nThis program can currently do these things: %s" % (" - ".join(config.valid_choices)))
+    print ("\nValid commands: %s" % (" - ".join(config.valid_choices)))
     while True:
         user_input = input("\nWould you like to know more about these functions? Enter the choices listed above to proceed, enter [NO] to cancel: ")
         user_input = user_input.lower()
@@ -201,10 +217,19 @@ def choice_help():
             print ("\n" + config.description_adminconsole + "\n")
         elif (user_input == "changelogin"):
             print ("\n" + config.description_changelogin + "\n")
+        elif (user_input == "clearscreen"):
+            print ("\n" + config.description_clearscreen + "\n")
+        elif (user_input == "encryptfile"):
+            print ("\n" + config.description_encryptfile + "\n")
+        elif (user_input == "decryptfile"):
+            print ("\n" + config.description_decryptfile + "\n")
         elif (user_input == "no"):
             return
         else:
-            print ("Please enter something in the list above -\n")
+            print ("\nPlease enter something in the list above -")
+
+def clearscreen():
+    os.system('clear')
 
 def define_word(user_define_input):
     try:

@@ -2,7 +2,7 @@
 import os
 #---------- prerequisite code end
 
-version_number = ("Alpha 1.7.0") #version number of the program
+version_number = ("Alpha 1.7.3") #version number of the program
 """
 version history -----
 Alpha 1.0.0: the program basics are written and files are created
@@ -25,6 +25,8 @@ Alpha 1.6.4 pre-release: bug fixes in adminconsole and help and more custom func
 Alpha 1.6.4: bug fixes in adminconsole and help and more custom functions made for debugging are added to adminconsole
 Alpha 1.7.0 pre_release: adding password changing and creating a new user function
 Alpha 1.7.0: added user credential chaning and create new user functions
+Alpha 1.7.3 pre_release: attempting to fix bug in adminconsole.run_function with delete user and encrypt/decrypt files function in the works
+Alpha 1.7.3: Bug is not fixed (cannot pass stings in adminconsole.run_function). Delete user is not added but encyrptfile and decryptfile functions are added. Help function is cleaned up to look nicer.
 
 """
 
@@ -32,7 +34,8 @@ Alpha 1.7.0: added user credential chaning and create new user functions
 #default_dirs = os.listdir(default_path) #uncomment this line if you wish to add a directory
 cal_ans = 0 #edit this value (keep .0) to see what the prev_output in the calculator is
 valid_cal_chars = ("~0123456789-+/*()\n") #edit this to change the accepted characters for calculation
-valid_choices = ("help", "calculator", "end", "define", "time", "weather", "adminconsole", "changelogin", "newlogin") #edit this to change/add validated choices
+valid_cal_commands = ("ans")
+valid_choices = ("help", "calculator", "end", "define", "time", "weather", "adminconsole", "changelogin", "newlogin", "clearscreen", "encryptfile", "decryptfile") #edit this to change/add validated choices
 illegal_statements = ["quit", "os.", "sys.", "shutil.", "import", "path", "dir", "builtins", "_", "{", "}", "lambda"] #edit this to change/add invalid statements in the calculator program
 description_help = ("[HELP] - You are currently in the help function, which is used to learn more about functions within this program. It can also contain future planned updates from time to time.") #edit this to change the message shown when user asks for description of help
 description_cal = ("[CALCULATOR] - The calcuator is buit directly in so you do not have to call it with the 'calculator' command. You can simply enter (ex): 1*1 to start calculating. A '~' must be used in front of a constant to work, ie: ~pi, ~e") #edit this to change the message shown when user asks for description of calculator
@@ -43,3 +46,6 @@ description_weather = ("[WEATHER] - This command requires a second word (a city 
 description_adminconsole = ("[ADMINCONSOLE] - This command  requires a key file in the Multitool folder with the password to it. If the correct password is entered, the user will be able to use the python shell like how it can usually be used within the multitool program. It is made for debugging although it can be an extremely powerful tool with custom functions in addition to regular python commands.") #displays the description of the adminconsole function
 description_changelogin = ("[CHANGELOGIN] - This command changes user credentials.") #displays the description of the change_logincrentials function
 description_newlogin = ("[NEWLOGIN] - This command addes a new user.") #displays the description of the create_newuser function
+description_clearscreen = ("[CLEARSCREEN] - This command clears the screen") #displays the description of the create_newuser function
+description_encryptfile = ("[ENCRYPTFILE] - This command requires a filename (and extention) or the path to the file to work. It will encrypt the file, but it is not as secure as the password encryption method because this one is reversable.") #displays the description of the encryptfile function
+description_decryptfile = ("[DECRYPTFILE] - This command requires a filename (and extention) or the path to the file to work. It will decyrpt the file.") #displays the description of the create_newuser function

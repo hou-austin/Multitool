@@ -1,7 +1,13 @@
 #---------- prerequisite code start
-import sys, hashlib, unicodedata, random
+import sys, hashlib, unicodedata, random, base64
 users = {}
 #---------- prerequisite code end
+
+def test():
+    print (True)
+
+def test2(text):
+    print (text)
 
 def check_login(username, password):
     with open("login.txt", "r") as login:
@@ -34,6 +40,7 @@ def salt_hash():
 
 def new_user(username, password):
     with open("login.txt", "a") as login:
+        print (type(login))
         login.write(username + " ")
         hasher = hashlib.sha512()
         salt = (salt_hash())
@@ -99,6 +106,40 @@ def change_credentials(new_username, new_password, old_username, old_password):
         users[new_username] = details
         with open("login.txt", "w") as login2:
             for user in users:
-                new_hashs = users[user]["salt"].decode("utf-8")
+                try:
+                    new_hashs = users[user]["salt"].decode("utf-8")
+                except AttributeError:
+                    new_hashs = users[user]["salt"]
                 contents = user + " " + users[user]["hash"] + " " + new_hashs + "\n"
                 login2.write(contents)
+
+def encrypt_file(path):
+    try:
+        with open(path, "r+") as note:
+            print ("File found! Attempting to encrypt the file")
+            contents = note.read()
+            contents = contents.encode("utf-8")
+            new_contents = base64.b64encode(contents)
+            new_contents = new_contents.decode("utf-8")
+            with open(path, "w"):
+                print ("Re-writing file!")
+            note.write(new_contents)
+            print ("%s has been encrypted!\n" % path)
+    except FileNotFoundError:
+        print ("File not found, generating new file!\n")
+        print ("%s cannot be encrypted - file empty\n" % path)
+
+def decrypt_file(path):
+    try:
+        with open(path, "r+") as note:
+            print ("File found! Attemping to decrypt the file")
+            contents = note.read()
+            contents = contents.encode("utf-8")
+            new_contents = base64.b64decode(contents)
+            new_contents = new_contents.decode("utf-8")
+            with open(path, "w"):
+                print ("Re-writing file!")
+            note.write(new_contents)
+            print ("%s has been decoded!\n" % path)
+    except FileNotFoundError:
+        print ("File not found! Please create file first -\n")

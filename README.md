@@ -20,7 +20,7 @@ To use this program, the user must install these in Console (Windows):
  - cd C:\Python34\Scripts\
  - pip install lxml
  - pip install requests
-
+s
 Other prerequisites:
 
  - Python 3.4.3: http://python.org
