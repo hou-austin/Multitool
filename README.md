@@ -35,7 +35,7 @@ Optional downloads/steps for developing:
  - Atom editor: http://atom.io (Free)
  - Sublime Text: http://www.sublimetext.com (Paid)
 
-To run the program: asdf
+To run the program:
 
  - After you clone the files from GitHub in your GitHub app, right-click on the Multitool project and select: open in terminal. Then type: python3 multitool.py to run the file
  - Instead of righ-clicking on Multitool project all the time, do: cmd-t to open in terminal quicker
