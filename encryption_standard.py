@@ -6,9 +6,6 @@ users = {}
 def test():
     print (True)
 
-def test2(text):
-    print (text)
-
 def check_login(username, password):
     with open("login.txt", "r") as login:
         contents = login.read()
@@ -40,7 +37,6 @@ def salt_hash():
 
 def new_user(username, password):
     with open("login.txt", "a") as login:
-        print (type(login))
         login.write(username + " ")
         hasher = hashlib.sha512()
         salt = (salt_hash())
