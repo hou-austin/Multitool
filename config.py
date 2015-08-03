@@ -2,7 +2,7 @@
 import os
 #---------- prerequisite code end
 
-version_number = ("Alpha 1.7.3") #version number of the program
+version_number = ("Alpha 1.7.6 pre-release") #version number of the program
 """
 version history -----
 Alpha 1.0.0: the program basics are written and files are created
@@ -27,6 +27,7 @@ Alpha 1.7.0 pre_release: adding password changing and creating a new user functi
 Alpha 1.7.0: added user credential chaning and create new user functions
 Alpha 1.7.3 pre_release: attempting to fix bug in adminconsole.run_function with delete user and encrypt/decrypt files function in the works
 Alpha 1.7.3: Bug is not fixed (cannot pass stings in adminconsole.run_function). Delete user is not added but encyrptfile and decryptfile functions are added. Help function is cleaned up to look nicer.
+Alpha 1.7.6 pre_release: Adding news function to the program.
 
 """
 
@@ -35,7 +36,7 @@ Alpha 1.7.3: Bug is not fixed (cannot pass stings in adminconsole.run_function).
 cal_ans = 0 #edit this value (keep .0) to see what the prev_output in the calculator is
 valid_cal_chars = ("~0123456789-+/*()\n") #edit this to change the accepted characters for calculation
 valid_cal_commands = ("ans")
-valid_choices = ("help", "calculator", "end", "define", "time", "weather", "adminconsole", "changelogin", "newlogin", "clearscreen", "encryptfile", "decryptfile") #edit this to change/add validated choices
+valid_choices = ("help", "calculator", "end", "define", "time", "weather", "adminconsole", "changelogin", "newlogin", "clearscreen", "encryptfile", "decryptfile", "news") #edit this to change/add validated choices
 illegal_statements = ["quit", "os.", "sys.", "shutil.", "import", "path", "dir", "builtins", "_", "{", "}", "lambda"] #edit this to change/add invalid statements in the calculator program
 description_help = ("[HELP] - You are currently in the help function, which is used to learn more about functions within this program. It can also contain future planned updates from time to time.") #edit this to change the message shown when user asks for description of help
 description_cal = ("[CALCULATOR] - The calcuator is buit directly in so you do not have to call it with the 'calculator' command. You can simply enter (ex): 1*1 to start calculating. A '~' must be used in front of a constant to work, ie: ~pi, ~e") #edit this to change the message shown when user asks for description of calculator

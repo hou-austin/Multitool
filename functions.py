@@ -79,6 +79,8 @@ def mainframe(user_input): #links input to function
             define_word(user_define_input)
         if (user_define_input[0] == "weather"):
             show_weather(user_define_input)
+        if (user_define_input[0] == "news"):
+            get_news(user_define_input)
     elif (user_input == "changelogin"): #reroutes changelogin input to change_logincredentials
         change_logincredentials()
     elif (user_input == "newlogin"): #reroutes newlogin input to create_newuser
@@ -249,11 +251,24 @@ def define_word(user_define_input):
     for d in defs:
         print(d)
 
-def get_news(user_define_input):
-    
+def get_news(user_define_input): #unfinnished, do not change unless fix is available
+    try:
+        response = requests.get("https://www.google.com/search?hl=en&gl=us&tbm=nws&authuser=0&q=test&oq="+format(user_define_input[1]))
+    except:
+        print ("Error while retrieving data!")
+        return
+    tree = html.fromstring(response.text)
+    url_to_news = tree.xpath(".//div[@class='esc-lead-article-title-wrapper']/h2[@class='esc-lead-article-title']/a/@href")
+    for url in url_to_news:
+        print(url)
+    summary_of_the_news = tree.xpath(".//div[@class='esc-lead-snippet-wrapper']/text()")
+    title_of_the_news = tree.xpath(".//span[@class='titletext']/text()")
+    print (summary_of_the_news)
+    print (title_of_the_news)
+
 
 def top_news(user_define_input):
-
+    print ("Not finished")
 
 def split_line_test(user_input):
     global user_define_input
@@ -261,6 +276,8 @@ def split_line_test(user_input):
     if (user_define_input[0] == "define"):
         return True
     if (user_define_input[0] == "weather"):
+        return True
+    if (user_define_input[0] == "news"):
         return True
     return False
 
@@ -290,8 +307,6 @@ def kelvin_celcius(temp):
     temp = float(temp)
     output_temp = (temp - kelvin)
     return output_temp
-
-test
 
 def active_adminconsole(activestate):
     while activestate == True:
