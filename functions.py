@@ -249,6 +249,12 @@ def define_word(user_define_input):
     for d in defs:
         print(d)
 
+def get_news(user_define_input):
+    
+
+def top_news(user_define_input):
+
+
 def split_line_test(user_input):
     global user_define_input
     user_define_input = user_input.split()
