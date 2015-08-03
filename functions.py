@@ -291,6 +291,8 @@ def kelvin_celcius(temp):
     output_temp = (temp - kelvin)
     return output_temp
 
+test
+
 def active_adminconsole(activestate):
     while activestate == True:
         command = input(">>> ")
