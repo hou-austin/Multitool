@@ -5,7 +5,7 @@ GitHub app setup:
     - Mac: http://mac.github.com
     - Windows: http://windows.github.com
  - Download the GitHub application (links above) and set it up
- - Open the application and login using your GitHub account (If you do not have one, go to: http://github.com and create an account)
+ - Open the application and login using your GitHub account (If you do not have one, go to: http://github.com and creatze an account)
  - Once you login, GitHub will ask you to see if you want to import any files into a repository. If there are any that is displays, uncheck them and proceed.
  - Then, look at the top left corner to find the plus button. After you press the plus button, select "clone". You should find the repository "Multitool" in there if you received an invite to collaborate. Clone that repository.
  - Everything should be all setup for GitHub now! Look at directions below for to setup "Multitool".
@@ -14,6 +14,11 @@ To use this program, the user must install these in Terminal (Mac):
 
  - sudo pip install requests
  - sudo pip install lxml
+
+*****: Common problems while installing on a Mac
+ - Import requests/lxml still does not work
+    - pip3 install requests
+    - pip3 install lxml
 
 To use this program, the user must install these in Console (Windows):
 
